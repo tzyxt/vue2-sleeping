@@ -1,0 +1,38 @@
+{
+  "name": "sleep-ali",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:Avatar": "vue serve ./src/components/Avatar/test.vue",
+    "test:TopAside": "vue serve ./src/components/TopAside/test.vue",
+    "test:LeftMenu": "vue serve ./src/components/LeftMenu/test.vue",
+    "test:Menu": "vue serve ./src/components/Menu/test.vue",
+    "test:Layout": "vue serve ./src/components/Layout/test.vue",
+    "test:Icon": "vue serve ./src/components/Icon/test.vue",
+    "test:Playbar": "vue serve ./src/components/Playbar/test.vue",
+    "test:Login": "vue serve ./src/components/Login/test.vue"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "core-js": "^3.6.5",
+    "element-ui": "^2.15.14",
+    "mockjs": "^1.1.0",
+    "node-sass": "^9.0.0",
+    "npm": "^10.8.2",
+    "postcss-pxtorem": "^6.1.0",
+    "querystring": "^0.2.1",
+    "vue": "^2.6.11",
+    "vue-lazyload": "^3.0.0",
+    "vue-router": "^3.4.9"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.8",
+    "@vue/cli-service": "~4.5.8",
+    "babel-plugin-component": "^1.1.1",
+    "less": "^3.0.4",
+    "less-loader": "^5.0.0",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
