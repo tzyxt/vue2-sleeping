@@ -13,13 +13,18 @@
         </div>
         <div class="form-container">
           <div class="form-item" >
-
           <label>账号：</label>
           <el-input v-model="loginId" placeholder="手机号或邮箱" type="text" size="100px" > </el-input>
+            <span class="err">
+              请输入账号
+            </span>
         </div>
         <div class="form-item">
           <label>密码：</label>
           <el-input placeholder="请输入密码" v-model="loginPwd" show-password></el-input>
+          <span class="err">
+            请输入密码
+          </span>
         </div>
         </div>
         <!-- <div class="form-Code">
@@ -28,7 +33,7 @@
         </div> -->
         <div class="form-button" >
           <el-button type="success" round @click="submit">登录</el-button>
-          <a href="" class="register">
+          <a href="../Enorll/index.vue" class="register">
             <el-button type="success" round>注册</el-button>
           </a>
         </div>
@@ -71,7 +76,7 @@ export default {
   },
   handleclick(){
     this.$emit("close");
-  }
+  },
 }
 }
 </script>
@@ -153,5 +158,13 @@ export default {
 }
 .register{
   margin-left: 15px;
+}
+.err{
+  font-size: 12px;
+  display: block;
+  left: 55px;
+  position: relative;
+  width: 200px;
+  color: #cc3600;
 }
 </style>

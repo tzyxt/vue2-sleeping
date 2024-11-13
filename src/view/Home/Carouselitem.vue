@@ -149,7 +149,9 @@ export default {
     screenWidth(val) {
           this.screenWidth = val 
       }
+
 }
+
 
 }
 </script>
@@ -174,15 +176,7 @@ export default {
 }
 
 .carousel-letf {
-  height: 100%;
-  width: 50px;
-  background:rgba(0, 0,0, 0.5);
-  position: absolute;
-  top: 0;
   left: 0;
-  font-size: 30px;
-  cursor: pointer;
-  opacity: 0;
 }
 .icon-container{
   height: 100%;
@@ -190,16 +184,18 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.carousel-right{
+.carousel-right,.carousel-letf{
   height: 100%;
   width: 50px;
   background: rgba(0, 0,0, 0.5);
   position: absolute;
   top: 0;
-  right:0;
   font-size: 30px;
   cursor: pointer;
   opacity: 0;
+}
+.carousel-right{
+  right:0;
 }
 .carousel-letf:hover,.carousel-right:hover{
   opacity: 1;

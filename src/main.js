@@ -4,7 +4,6 @@ import App from './App.vue'
 import "./styles/global.less";
 import "./styles/font.less";
 import showMessage from "./utils/showMessage";
-// import animate from "./utils/animate";
 import router from './router';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

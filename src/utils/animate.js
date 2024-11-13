@@ -1,3 +1,4 @@
+// 动漫进行函数
 export default function createAnimation(options) {
     var from = options.from; // 起始值
     var to = options.to; // 结束值

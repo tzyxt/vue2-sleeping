@@ -34,7 +34,7 @@ components:{
 
 created() {
   this.$bus.$on("handlelodin", this.handleChange);
-  this.$bus.$on("mainmouseenter", this.handlemainmouseenter);
+  // this.$bus.$on("mainmouseenter", this.handlemainmouseenter);
 },
 destroyed() {
   this.$bus.$off("handlelodin", this.handleChange);
@@ -58,9 +58,15 @@ methods:{
   handleclose(){
     this.loginchange = false;
   },
-  handlemainmouseenter(){
-  console.log(2222)
-  },
+  // handlemainmouseenter(e){
+  // if(!e){
+  //   return;
+  // }
+  // e = true
+  // var dom = document.querySelector('.playbar-container');
+  // dom.style.bottom = 0;
+
+  // }
 }
 }
 </script>

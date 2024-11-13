@@ -64,6 +64,7 @@
 </template>
 <script>
 import Icon from "../Icon/index.vue";
+import debounce from "@/utils/debounce";
 export default {
   components: {
     Icon,
@@ -95,7 +96,10 @@ export default {
       duration: 0,
       // 进度条位置
       cacheCurrent: 0,
-
+      // 动画是否在进行
+      mouseselect:false,
+      // 容器高度
+      appheight:0,
     };
   },
   created() {
@@ -104,9 +108,12 @@ export default {
     this.$bus.$on("musickplay", this.handleplay);
   },
   mounted(){
-    // this.setSelectBebounce = debounce(this.handlestart, 1000);
-    // this.$refs.playbarcontainer.addEventListener("mouseleave");
-    this.$refs.playbarcontainer.addEventListener("mouseenter", this.handlemouseenter);
+    this.setSelectBebounce = debounce(this.handlemouseleave, 1000);
+    window.addEventListener('mousemove', this.handleMouseMove);
+    this.$refs.playbarcontainer.addEventListener("mouseleave", this.setSelectBebounce );
+  },
+  beforeDestroy(){
+    // this.$refs.playbarcontainer.("mouseleave", this.setSelectBebounce );
   },
   destroyed() {
     this.$bus.$off("musicstart", this.handlemusick);
@@ -241,10 +248,27 @@ export default {
       }
       return time
     },
-    handlemouseenter(){
-      console.log(111)
-      this.$bus.$emit('mainmouseenter')
+    handleMouseMove(event){
+      this.appheight = document.documentElement.clientHeight - 10
+      const { clientX, clientY } = event;
+      if(clientX >185 && clientY >= this.appheight){
+        this.handlemovuse(0)
+      }
     },
+    handlemouseleave(){
+      this.handlemovuse(84)
+    },
+    handlemovuse(value){
+      if(this.mouseselect){
+        return;
+      }
+      this.mouseselect = true;
+      var dom = document.querySelector('.playbar-container');
+      dom.style.bottom = -value + 'px';
+      setTimeout(()=>{
+        this.mouseselect = false;
+      },360)
+    }
   },
 };
 </script>
@@ -265,8 +289,7 @@ export default {
   box-sizing: border-box;
   padding: 8px 16px;
   min-width: 1500px;
-  // transform: scale(0);
-  // transform: 0.3s;
+  transition: 350ms;
 }
 
 /* 开始播放 */
