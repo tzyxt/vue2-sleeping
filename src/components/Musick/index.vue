@@ -12,10 +12,11 @@
           v-for="item in list"
           :key="item.id"
         >
-         <div class="songlist__item" >
-            <div  class="songlist__id"  @click="handleclick" ref="songlistid">
+        <div class="songlist__item" >
+            <div  class="songlist__id" ref="songlistid">
               <Icon type="stop" :data-name="item.id"/>
               <span >{{ item.id }}</span>
+    
             </div>
             <div class="songlist__songtitle">
               <span class="songlist__songtitle_text">
@@ -30,7 +31,7 @@
                 {{ item.time }}
               </span>
             </div>
-         </div>
+        </div>
         </li>
       </ul>
       
@@ -42,40 +43,20 @@
 <script>
 import Icon from "@/components/Icon/index.vue";
 import Playbar from "@/components/Playbar/index.vue";
-
 export default {
     components: {
     Icon,
     Playbar,
   },
+
   props:{
     list:{
       type:Array,
       default:()=>[],
     }
   },
- methods: {
-  handleScroll() {
-      this.$bus.$emit("mainScroll", this.$refs.musiccontainer);
-  },
-  handleclick(){
-    this.$emit("datamusick", this.list);
-  },
-    // 歌曲列表
-    musicklist() {
-      this.$bus.$emit("musicklist", this.list);
-    },
-    // 点击第几个歌曲id
-    musickclick(e) {
-      this.$bus.$emit("musicstart", e.target.dataset.name);
-    },
-
-    // 开始播放
-    musickstart() {
-      this.$bus.$emit("musickplay");
-    },
-  },
   mounted() {
+    // 检测滚动条
     this.$refs.musiccontainer.addEventListener("scroll", this.handleScroll);
     this.$refs.musiccontainer.addEventListener("click", this.musickclick);
     this.$refs.musiccontainer.addEventListener("click", this.musicklist);
@@ -87,6 +68,26 @@ export default {
     this.$refs.musiccontainer.removeEventListener("click", this.musicklist);
     this.$refs.musiccontainer.removeEventListener("click", this.musickstart);
   },
+methods: {
+  handleScroll() {
+      this.$bus.$emit("mainScroll", this.$refs.musiccontainer);
+  },
+    // 歌曲列表
+    musicklist() {
+      this.$bus.$emit("musicklist", this.list);
+    },
+    // 点击第几个歌曲id
+    musickclick(e) {
+      this.$bus.$emit("musicstart", e.target.dataset.name);
+      
+    },
+
+    // 开始播放
+    musickstart() {
+      this.$bus.$emit("musickplay");
+    },
+  },
+  
 }
 </script>
 

@@ -6,7 +6,6 @@
     <div class="text">
       <span>{{item.title}}</span>
     </div>
-
       <div class="icon">
         <Icon :type="item.icon"></Icon>
       </div>
@@ -35,7 +34,7 @@ export default {
                     name:"Video",
                     title:'视频专区',
                     icon:'video',
-                    exact: true,   
+                    exact: false,   
                 },
                 {
                     name:'Ear',

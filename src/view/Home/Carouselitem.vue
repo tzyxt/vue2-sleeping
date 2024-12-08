@@ -175,7 +175,7 @@ export default {
   object-fit:cover;
 }
 
-.carousel-letf {
+.carousel-letf{
   left: 0;
 }
 .icon-container{
@@ -195,7 +195,7 @@ export default {
   opacity: 0;
 }
 .carousel-right{
-  right:0;
+  right:10%;
 }
 .carousel-letf:hover,.carousel-right:hover{
   opacity: 1;

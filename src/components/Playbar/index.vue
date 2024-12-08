@@ -69,13 +69,6 @@ export default {
   components: {
     Icon,
   },
-  props:{
-    // 播放音乐的列表
-    listmusick:{
-      type:Array,
-      default:()=>[],
-    },
-  },
   data() {
     return {
       // 当前播放音乐的地址
@@ -85,7 +78,7 @@ export default {
       // 音乐是否播放
       isplay: false,
       // 当前点击音乐id
-      musickid: [],
+      musickid:0,
       // 自动播放
       autoplay: false,
       // 当前播放音乐的标题
@@ -100,6 +93,8 @@ export default {
       mouseselect:false,
       // 容器高度
       appheight:0,
+      // 音乐列表
+      listmusick:[]
     };
   },
   created() {
@@ -113,7 +108,7 @@ export default {
     this.$refs.playbarcontainer.addEventListener("mouseleave", this.setSelectBebounce );
   },
   beforeDestroy(){
-    // this.$refs.playbarcontainer.("mouseleave", this.setSelectBebounce );
+    this.$refs.playbarcontainer.removeEventListener("mouseleave", this.setSelectBebounce );
   },
   destroyed() {
     this.$bus.$off("musicstart", this.handlemusick);
@@ -129,16 +124,20 @@ export default {
     // 获取被点击音乐的地址
     handlelistmusic(e) {
       this.listmusick = e;
+      if(this.musickid >= 0){
       this.musickUrl = e[this.musickid].mp3Url;
       this.musickTitle = e[this.musickid].title;
       this.imgurl = e[this.musickid].midImg;
+      }
     },
     // 播放当前点击的音乐e
     handleplay() {
       // 缓存音乐
-      setTimeout(() => {
+      if(this.musickid >= 0){
+        setTimeout(() => {
         this.$refs.audio.play();
-      }, 500);
+      },500);
+      }
     },
     // 播放/暂停
     audioplay(start) {

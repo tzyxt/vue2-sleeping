@@ -8,6 +8,26 @@ const router = new VueRouter({
     mode: 'history'
 }); 
 
+router.beforeEach((to, from, next)=>{
+    if (to.meta.auth) {
+        const status = store.getters["loginUser/status"];
+        if (status === "loading") {
+          next({
+            path: "/lodding",
+            query: {
+              returnurl: to.fullPath,
+            },
+          });
+          return;
+        } else if (status === "unlogin") {
+          alert("你没有登录，请先登录");
+          return;
+        }
+      }
+      next();
+}
+)
+
 export default router;
 
 

@@ -9,17 +9,16 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import "./eventBus";
 import vLoading from "./directives/loading";
-
-
-
+import store from "./store"
 
 Vue.prototype.$showMessage = showMessage;
 
-// Vue.prototype.$animate = animate;
 Vue.use(ElementUI);
 Vue.directive('loading', vLoading)
 
+store.dispatch("loginUser/whoAmI")
 new Vue({
+  store,
   router,
   render: (h) => h(App),
 }).$mount('#app')

@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <div class="login-box">
+    <div class="login-box" ref="loginbox">
       <div class="form">
         <div class="login-title">
           账号登录
@@ -15,16 +15,16 @@
           <div class="form-item" >
           <label>账号：</label>
           <el-input v-model="loginId" placeholder="手机号或邮箱" type="text" size="100px" > </el-input>
-            <span class="err">
-              请输入账号
-            </span>
+          <p class="err" >
+              
+            </p>
         </div>
         <div class="form-item">
           <label>密码：</label>
           <el-input placeholder="请输入密码" v-model="loginPwd" show-password></el-input>
-          <span class="err">
-            请输入密码
-          </span>
+          <p class="err" >
+              
+            </p>
         </div>
         </div>
         <!-- <div class="form-Code">
@@ -33,9 +33,8 @@
         </div> -->
         <div class="form-button" >
           <el-button type="success" round @click="submit">登录</el-button>
-          <a href="../Enorll/index.vue" class="register">
-            <el-button type="success" round>注册</el-button>
-          </a>
+        
+            <el-button type="success" round @click="openNewTab">注册</el-button>
         </div>
       </div>
     </div>
@@ -56,27 +55,29 @@ export default {
     }
   },
   methods:{
-     submit(){
-      if(this.loginId === "" && this.loginPwd === ""){
-       alert("请输入账号和密码");
-        return;
-      }else{
-        if(this.loginId === ""){
-          alert("请输入账号");
-          return;
-
-        }
-        if(this.loginPwd === ""){
-          alert("请输入密码");
-          return;
-        }
+    async submit(){
+      const resp = await this.$store.dispatch("loginUser/login",{
+        loginId: this.loginId,
+        loginPwd: this.loginPwd,
+      })
+      if (resp) {
+        this.handleclick()
+      } else {
+        this.$showMessage({
+          content:"账号或密码错误",
+          type: "error",
+          container:this.$refs.loginbox,
+        })
       }
-      console.log(this.loginId, this.loginPwd);
       
   },
   handleclick(){
     this.$emit("close");
   },
+  openNewTab(){
+    this.$emit("enroll")
+  },
+
 }
 }
 </script>
@@ -147,6 +148,7 @@ export default {
 // input距离
 .form-item{
   margin-bottom: 20px;
+  position: relative;
 }
 .close{
   position: absolute;
@@ -156,15 +158,17 @@ export default {
   border: none;
   background: none;
 }
-.register{
-  margin-left: 15px;
-}
 .err{
-  font-size: 12px;
-  display: block;
-  left: 55px;
-  position: relative;
-  width: 200px;
-  color: #cc3600;
-}
+    font-size: 12px;
+    display: block;
+    left: 50px;
+    position: absolute;
+    width: 200px;
+    color: #cc3600;
+    height: 0px;
+    /* top: 27px; */
+    /* left: 20px; */
+    bottom: -13px;
+    caret-color: transparent;
+  }
 </style>

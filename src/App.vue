@@ -1,7 +1,6 @@
 <template>
-
-  <div class="app-container">
-  <Login v-if="loginchange" @close="handleclose"/>
+  <div class="app-container" >
+  <Login v-if="loginchange" @close="handleclose" @enroll="hanldeenroll" ref="loginging"/>
     <Layout >
       <template #left>
         <div class="menu">
@@ -10,11 +9,14 @@
       </template>
       <template #default>
         <TopAside />
-        <Playbar :listmusick="list"/>
-        <router-view @songlist="songmusick"/>
+        <Playbar />
+        <router-view/>
       </template>
     </Layout>
+    <Register v-if="enrollchange" @close="handleenrollclose" />
+
   </div>
+  
 </template>
 
 <script>
@@ -23,6 +25,7 @@ import Layout from './components/Layout/index.vue';
 import Login from './components/Login/index.vue';
 import TopAside from "@/components/TopAside/index.vue";
 import Playbar from "@/components/Playbar/index.vue";
+import Register from "@/components/Register/index.vue"
 export default {
 components:{
   LeftMenu,
@@ -30,6 +33,7 @@ components:{
   Login,
   TopAside,
   Playbar,
+  Register,
 },
 
 created() {
@@ -44,29 +48,28 @@ data(){
   return {
     list:[],
     loginchange:false,
+    enrollchange:false,
   }
 },
 
 methods:{
-  songmusick(e){
-    this.list = e;
-  },
+  // 显示登录界面
   handleChange(){
-    console.log(111)
     this.loginchange =!this.loginchange;
   },
+  // 关闭登录界面显示注册
+  hanldeenroll(){
+    this.handleclose()
+    this.enrollchange = !this.enrollchange
+  },
+  // 关闭注册
+  handleenrollclose(){
+    this.enrollchange = false
+  },
+  // 关闭登录
   handleclose(){
     this.loginchange = false;
   },
-  // handlemainmouseenter(e){
-  // if(!e){
-  //   return;
-  // }
-  // e = true
-  // var dom = document.querySelector('.playbar-container');
-  // dom.style.bottom = 0;
-
-  // }
 }
 }
 </script>

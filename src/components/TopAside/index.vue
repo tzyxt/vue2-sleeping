@@ -5,8 +5,13 @@
                 <Avatar src="https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2024%2F0807%2Fc863485bj00shtw5m001rd200u000u0g003i003i.jpg&thumbnail=660x2147483647&quality=80&type=jpg" :size="50" ></Avatar>
             </a>
             <div class="login">
-                <div class="logining" ref="loginingcontainer">
-                    立即登录
+                <div class="login-container" ref="loginingcontainer">
+                    <span v-if="status === 'loading'"  class="logining">loading...</span>
+                    <template v-else-if="status === 'login'">
+                    <span class="name-container">{{ user.name }}</span>
+                    <span @click="handleLoginOut" class="logining">退出</span>
+                    </template>
+                    <span v-else class="logining">立即登录 </span>
                 </div>
             </div>
         </div>
@@ -15,30 +20,35 @@
 
 <script>
 import Avatar from "../Avatar/index.vue";
-
+import { mapState, mapGetters } from "vuex";
 export default {
 components:{
     Avatar,
 },
-data(){
-    return {
-        loginchange:true,
-    }
-},
+
 beforeDestroy() {
     this.$refs.loginingcontainer.removeEventListener("click", this.handclick);
-
-
 },
+// 监听点击实际 通知给app 显示登录页面
 mounted(){
     this.$refs.loginingcontainer.addEventListener("click", this.handclick);
-
-
+},
+computed: {
+    ...mapState("loginUser",["user"]),
+    ...mapGetters("loginUser", ["status"]),
+    
 },
 methods:{
+    // 登录成功后 不需要在发送了
     handclick(){
-        console.log("点击了");
-        this.$bus.$emit("handlelodin", this.$refs.loginingcontainer);
+        if(!this.user){
+            this.$bus.$emit("handlelodin");
+        }
+        
+    },
+    // 注销
+    async handleLoginOut(){
+        await this.$store.dispatch("loginUser/loginOut")
     },
 }
 }
@@ -67,21 +77,34 @@ methods:{
     
 
 }
+.login-container{
+    height: 100px;
+    position: relative;
+}
 .list-container:hover{
-   .login{
+.login{
     transform: scale(1);
-   }
+}
 
 }
 .logining{
-    height: 42px;
-    line-height: 42px;
+    display: block;
     background: #FF6022;
-    text-align:center;
+    text-align: center;
     border-radius: 30px;
     font-weight: 500;
     font-size: 16px;
-
+    height: 42px;
+    line-height: 42px;
+    position: absolute;
+    width: 140px;
+    left: 50%;
+    top: 70%;
+    transform: translate(-50%, -50%);
+    caret-color: transparent;
+}
+.name-container{
+    caret-color: transparent;
 }
 .login{
     position: absolute;
@@ -95,6 +118,7 @@ methods:{
     cursor: pointer;
     color: #fff; 
     transform: scale(0);
+    height: 100px;
     /* transform-origin:center center; */
     transition: all 0.5s;
 }
@@ -107,6 +131,7 @@ methods:{
         background:black;
         top: -4px;
         right: 20%;
+        
 }
 
 </style>

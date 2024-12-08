@@ -11,7 +11,7 @@
         </p>
       </div>
     </div>
-    <Musick :list="data.rows"  v-loading="isLoading"  @datamusick="datalist"/>
+    <Musick :list="data.rows"  v-loading="isLoading"  />
   </div>
 </template>
 
@@ -19,6 +19,7 @@
 import Musick from "@/components/Musick/index.vue";
 import fetchData from "@/mixins/fetchData.js";
 import { getHongshui } from "@/api/hongshui.js";
+
 export default {
   mixins: [fetchData({ total: 0, rows: [] })],
   components:{
@@ -52,10 +53,6 @@ export default {
       if (dec <= range) {
         this.loadMore();
       }
-    },
-    // 歌曲列表
-    datalist(e){
-      this.$emit("songlist", e);
     },
     async fetchData() {
       return await getHongshui( this.page, this.limit);
